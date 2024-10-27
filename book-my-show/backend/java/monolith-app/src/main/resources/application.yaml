@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Booking System
+  datasource:
+    url: jdbc:mysql://localhost:3306/bms
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+      show-sql: true
+    sql:
+      init:
+        mode: always
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true

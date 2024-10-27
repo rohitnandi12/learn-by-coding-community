@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- ChangeSet for Vendor -->
+    <changeSet id="1" author="damini">
+        <createTable tableName="vendor">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="contact_number" type="varchar(50)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="address" type="varchar(255)"/>
+            <column name="website" type="varchar(255)"/>
+            <column name="status" type="varchar(50)"/>
+            <column name="registration_date" type="timestamp"/>
+            <column name="logo_url" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for EventType -->
+    <changeSet id="2" author="damini">
+        <createTable tableName="event_type">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="label" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for Venue -->
+    <changeSet id="3" author="damini">
+        <createTable tableName="venue">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="address" type="varchar(255)"/>
+            <column name="latitude" type="decimal(10,8)"/>
+            <column name="longitude" type="decimal(11,8)"/>
+            <column name="total_seating_capacity" type="integer"/>
+            <column name="venue_type" type="varchar(50)"/>
+            <column name="operational_status" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for Event -->
+    <changeSet id="4" author="damini">
+        <createTable tableName="event">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255)"/>
+            <column name="description" type="text"/>
+            <column name="vendor_id" type="uuid"/>
+            <column name="venue_id" type="uuid"/>
+            <column name="event_type_id" type="uuid"/>
+            <column name="start_date" type="timestamp"/>
+            <column name="thumbnail_url" type="varchar(255)"/>
+            <column name="end_date" type="timestamp"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="event"
+                                 baseColumnNames="vendor_id"
+                                 referencedTableName="vendor"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_event_vendor"/>
+        <addForeignKeyConstraint baseTableName="event"
+                                 baseColumnNames="venue_id"
+                                 referencedTableName="venue"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_event_venue"/>
+        <addForeignKeyConstraint baseTableName="event"
+                                 baseColumnNames="event_type_id"
+                                 referencedTableName="event_type"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_event_event_type"/>
+    </changeSet>
+
+    <!-- ChangeSet for Show -->
+    <changeSet id="5" author="damini">
+        <createTable tableName="event_show">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="start_date" type="timestamp"/>
+            <column name="end_date" type="timestamp"/>
+            <column name="event_id" type="uuid"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="event_show"
+                                 baseColumnNames="event_id"
+                                 referencedTableName="event"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_show_event"/>
+    </changeSet>
+
+    <!-- ChangeSet for SeatType -->
+    <changeSet id="6" author="damini">
+        <createTable tableName="seat_type">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="label" type="varchar(255)"/>
+            <column name="price" type="decimal(10,2)"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ChangeSet for Seat -->
+    <changeSet id="7" author="damini">
+        <createTable tableName="seat">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="seat_type_id" type="uuid"/>
+            <column name="venue_id" type="uuid"/>
+            <column name="operational_status" type="varchar(50)"/>
+            <column name="label" type="varchar(50)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="seat"
+                                 baseColumnNames="seat_type_id"
+                                 referencedTableName="seat_type"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_seat_type"/>
+        <addForeignKeyConstraint baseTableName="seat"
+                                 baseColumnNames="venue_id"
+                                 referencedTableName="venue"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_venue"/>
+    </changeSet>
+
+    <!-- ChangeSet for SeatTypeInShow -->
+    <changeSet id="8" author="damini">
+        <createTable tableName="seat_type_in_show">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="seat_type_id" type="uuid"/>
+            <column name="show_id" type="uuid"/>
+            <column name="price" type="decimal(10,2)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="seat_type_in_show"
+                                 baseColumnNames="seat_type_id"
+                                 referencedTableName="seat_type"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_type_in_show_seat_type"/>
+        <addForeignKeyConstraint baseTableName="seat_type_in_show"
+                                 baseColumnNames="show_id"
+                                 referencedTableName="event_show"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_type_in_show_show"/>
+    </changeSet>
+
+    <!-- ChangeSet for SeatInShow -->
+    <changeSet id="9" author="damini">
+        <createTable tableName="seat_in_show">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="seat_type_in_show_id" type="uuid"/>
+            <column name="show_id" type="uuid"/>
+            <column name="booking_status" type="varchar(50)"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="seat_in_show"
+                                 baseColumnNames="seat_type_in_show_id"
+                                 referencedTableName="seat_type_in_show"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_in_show_seat_type_in_show"/>
+        <addForeignKeyConstraint baseTableName="seat_in_show"
+                                 baseColumnNames="show_id"
+                                 referencedTableName="event_show"
+                                 referencedColumnNames="id"
+                                 constraintName="fk_seat_in_show_show"/>
+    </changeSet>
+
+    <!-- ChangeSet for User -->
+    <changeSet id="10" author="damini">
+        <createTable tableName="user">
+            <column name="id" type="uuid">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
+            <column name="phone" type="varchar(50)"/>
+            <column name="is_active" type="boolean"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
