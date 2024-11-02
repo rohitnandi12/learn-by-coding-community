@@ -3,6 +3,7 @@ package org.lbcc.bms.bms_monolith.entity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Column;
 import lombok.experimental.SuperBuilder;
 import org.lbcc.bms.bms_monolith.common.entity.BaseAuditingEntity;
 
@@ -20,5 +21,6 @@ public class SeatTypeInShow extends BaseAuditingEntity {
     @JoinColumn(name = "show_id")
     private EventShow show;
 
+    @Column(precision = 10, scale = 2)
     private BigDecimal price;
 }
