@@ -6,6 +6,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.FetchType;
+import jakarta.persistence.Column;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,11 @@ import java.util.List;
 @AllArgsConstructor @NoArgsConstructor
 public class Event extends BaseAuditingEntity {
 
+    @Size(min=10, max=50, message = "Title must be between 10 and 50 characters.")
+    @Column(nullable = false, length = 50)
     private String title;
+
+    @Column(length = 1000)
     private String description;
 
     @ManyToOne(fetch = FetchType.EAGER)
@@ -38,10 +44,13 @@ public class Event extends BaseAuditingEntity {
     @JoinColumn(name = "event_type_id")
     private EventType eventType;
 
+    @Column(nullable = false)
     private Instant startDate;
 
+    @Column(length = 255)
     private String thumbnailUrl;
 
+    @Column(nullable = false)
     private Instant endDate;
 
 }

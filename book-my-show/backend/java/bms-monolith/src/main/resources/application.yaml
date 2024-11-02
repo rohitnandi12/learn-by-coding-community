@@ -3,8 +3,8 @@ spring:
     name: BMS Monolith
   datasource:
     url: jdbc:mysql://localhost:3306/bms
-    username: root
-    password: root
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:root}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
@@ -13,3 +13,7 @@ spring:
   sql:
     init:
       mode: always
+
+server:
+  servlet:
+    context-path: /api/v1

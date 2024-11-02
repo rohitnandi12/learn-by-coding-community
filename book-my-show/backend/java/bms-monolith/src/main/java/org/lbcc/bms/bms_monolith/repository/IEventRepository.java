@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface EventRepository extends JpaRepository<Event, UUID> {
+public interface IEventRepository extends JpaRepository<Event, UUID> {
 
-    @Query("SELECT e FROM Event e JOIN FETCH e.vendor JOIN FETCH e.venue JOIN FETCH e.eventType")
+    @Query("SELECT e FROM Event e JOIN FETCH e.vendor JOIN FETCH e.venue JOIN FETCH e.eventType ORDER BY e.startDate DESC")
     Page<Event> findAllWithDetails(Pageable pageable);
 }

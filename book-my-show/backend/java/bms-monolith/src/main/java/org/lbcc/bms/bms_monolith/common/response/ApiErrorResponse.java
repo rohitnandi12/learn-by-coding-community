@@ -14,7 +14,8 @@ import java.time.Instant;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 public class ApiErrorResponse {
-    private boolean success;
+    @Builder.Default
+    private boolean success = false;
     private String message;
     private String code;
     @Builder.Default

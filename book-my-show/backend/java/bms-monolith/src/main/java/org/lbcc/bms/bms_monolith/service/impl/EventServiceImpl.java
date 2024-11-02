@@ -1,35 +1,33 @@
 package org.lbcc.bms.bms_monolith.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.lbcc.bms.bms_monolith.common.constants.BMSConstants;
-import org.lbcc.bms.bms_monolith.common.response.ApiListResponse;
 import org.lbcc.bms.bms_monolith.entity.Event;
 import org.lbcc.bms.bms_monolith.exception.EventServiceException;
-import org.lbcc.bms.bms_monolith.repository.EventRepository;
+import org.lbcc.bms.bms_monolith.repository.IEventRepository;
 import org.lbcc.bms.bms_monolith.service.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 @Slf4j
 public class EventServiceImpl implements IEventService {
 
+    private final IEventRepository IEventRepository;
+
     @Autowired
-    private EventRepository eventRepository;
+    public EventServiceImpl(IEventRepository IEventRepository) {
+        this.IEventRepository = IEventRepository;
+    }
 
     @Override
-    public ApiListResponse<Event> getAllEvents(int page, int size) {
+    public Page<Event> getAllEvents(Pageable pageable) {
         try {
-            Page<Event> eventsPage = eventRepository.findAllWithDetails(PageRequest.of(page, size));
-            log.info("Fetched {} events for page {} with size {}", eventsPage.getTotalElements(), page, size);
+            Page<Event> eventsPage = IEventRepository.findAllWithDetails(pageable);
+            log.info("Fetched {} events with pageable {}", eventsPage.getTotalElements(), pageable);
 
-            return ApiListResponse.<Event>builder()
-                    .success(true)
-                    .message(BMSConstants.EVENT_SUCCESS_MESSAGE)
-                    .setPage(eventsPage)
-                    .build();
+            return eventsPage;
         } catch (Exception e) {
             log.error("Error fetching events: {}", e.getMessage());
             throw new EventServiceException("Failed to fetch events", e);

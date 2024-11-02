@@ -36,10 +36,8 @@ public class GlobalExceptionHandler {
 
     private ResponseEntity<ApiErrorResponse> buildErrorResponse(HttpStatus status, String message, String code) {
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
-                .success(false)
                 .message(message)
                 .code(code)
-                .timestamp(Instant.now())
                 .build();
         return ResponseEntity.status(status).body(errorResponse);
     }
