@@ -21,5 +21,6 @@ server:
     context-path: /api/v1
 app:
   auth:
-    jwt-secret: ${JWT_SECRET:some_secret}
-    jwt-expiration-ms: ${JWT_EXPIRATION_MS:50000}
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:ZmxhbWVyb2xsc3RvcHBlZGNyZWFtY29sbGVjdGZhbGxzb2xkaWVydG9uZWdpdmVua24=}
+      expiration-in-ms: ${JWT_EXPIRATION_IN_MS:50000}

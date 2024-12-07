@@ -20,7 +20,7 @@
             <column name="description" type="VARCHAR(50)" />
         </createTable>
 
-        <createTable tableName="users">
+        <createTable tableName="registered_users">
             <column name="id" type="CHAR(36)">
                 <constraints primaryKey="true" />
             </column>
@@ -42,7 +42,7 @@
 
         <createTable tableName="user_roles">
             <column name="user_id" type="UUID">
-                <constraints nullable="false" foreignKeyName="fk_user_roles_user" references="users(id)" />
+                <constraints nullable="false" foreignKeyName="fk_user_roles_user" references="registered_users(id)" />
             </column>
             <column name="role_id" type="UUID">
                 <constraints nullable="false" foreignKeyName="fk_user_roles_role" references="roles(id)" />
