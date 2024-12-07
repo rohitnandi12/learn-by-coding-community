@@ -27,7 +27,7 @@ import java.util.List;
 @EnableMethodSecurity
 public class WebSecurityConfig{
 
-  List<String> publicApis = List.of( "/api/auth/**");
+  List<String> publicApis = List.of( "/auth/**");
 
   private final AuthEntryPointJwt unauthorizedHandler = new AuthEntryPointJwt();
  UserDetailsServiceImpl userDetailsService = new UserDetailsServiceImpl();

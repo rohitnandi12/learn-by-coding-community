@@ -68,7 +68,7 @@ public class AuthServiceImpl implements AuthService {
             roles.add(roleFactory.getInstance("user"));
         } else {
             for (String role : strRoles) {
-                roles.add(roleFactory.getInstance(role));
+                roles.add(roleFactory.getInstance(role.toLowerCase()));
             }
         }
         return roles;
