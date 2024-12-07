@@ -22,17 +22,20 @@ import java.util.Set;
 @Component
 public class AuthServiceImpl implements AuthService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-   private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private RoleFactory roleFactory;
 
+    public AuthServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
+
     @Override
     public ResponseEntity<ApiResponse> signUpUser(SignUpRequestDto signUpRequestDto)
-            throws UserAlreadyExistsException , RoleNotFoundException {
+            throws UserAlreadyExistsException, RoleNotFoundException {
         if (userService.existsByEmail(signUpRequestDto.getEmail())) {
             throw new UserAlreadyExistsException("Registration Failed: Provided email already exists. Try sign in or provide another email.");
         }
@@ -44,7 +47,6 @@ public class AuthServiceImpl implements AuthService {
         userService.save(user);
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 ApiResponse.builder()
-                       // .isSuccess(true)
                         .message("User account has been successfully created!")
                         .build()
         );
@@ -55,13 +57,12 @@ public class AuthServiceImpl implements AuthService {
                 .email(signUpRequestDto.getEmail())
                 .username(signUpRequestDto.getUserName())
                 .password(signUpRequestDto.getPassword())
-                .enabled(true)
                 .roles(determineRoles(signUpRequestDto.getRoles()))
                 .build();
     }
 
     private Set<Role> determineRoles(Set<String> strRoles) throws RoleNotFoundException {
-    Set<Role> roles = new HashSet<>();
+        Set<Role> roles = new HashSet<>();
 
         if (strRoles == null) {
             roles.add(roleFactory.getInstance("user"));

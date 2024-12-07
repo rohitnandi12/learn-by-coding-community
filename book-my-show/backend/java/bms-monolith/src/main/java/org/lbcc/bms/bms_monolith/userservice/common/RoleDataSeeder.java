@@ -11,29 +11,32 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
 @Component
 public class RoleDataSeeder {
-  @Autowired private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
-  @EventListener
-  @Transactional
-  public void LoadRoles(ContextRefreshedEvent event) {
-
-    List<RoleType> roles = Arrays.stream(RoleType.values()).toList();
-
-    for (RoleType erole : roles) {
-      if (roleRepository.findByName(erole) == null) {
-        Role role = new Role();
-        role.setName(erole);
-        role.setDescription(erole.name());
-        role.setCreatedBy("system");
-        role.setCreatedDate(Instant.now());
-        role.setLastModifiedDate(Instant.now());
-        role.setLastModifiedBy("system");
-        roleRepository.save(role);
-      }
+    public RoleDataSeeder(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
-  }
+
+    @EventListener
+    @Transactional
+    public void loadRoles(ContextRefreshedEvent event) {
+
+        List<RoleType> roles = Arrays.stream(RoleType.values()).toList();
+
+        for (RoleType roleType : roles) {
+            if (roleRepository.findByLabel(roleType) == null) {
+                Role role = new Role();
+                role.setId(UUID.randomUUID().toString());
+                role.setLabel(roleType);
+                role.setDescription(roleType.name());
+                role.setCreatedBy("system");
+                role.setCreatedDate(Instant.now());
+                roleRepository.save(role);
+            }
+        }
+    }
 }

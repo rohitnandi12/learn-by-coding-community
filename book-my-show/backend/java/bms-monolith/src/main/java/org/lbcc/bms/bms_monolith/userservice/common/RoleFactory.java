@@ -14,16 +14,16 @@ public class RoleFactory {
     public Role getInstance(String role) throws RoleNotFoundException {
         switch (role) {
             case "admin" -> {
-                return roleRepository.findByName(RoleType.ADMIN);
+                return roleRepository.findByLabel(RoleType.ADMIN);
             }
             case "user" -> {
-                return roleRepository.findByName(RoleType.USER);
+                return roleRepository.findByLabel(RoleType.USER);
             }
             case "vendor" -> {
-                return roleRepository.findByName(RoleType.VENDOR);
+                return roleRepository.findByLabel(RoleType.VENDOR);
             }
             case "guest" -> {
-                return roleRepository.findByName(RoleType.GUEST);
+                return roleRepository.findByLabel(RoleType.GUEST);
             }
 
             default -> throw  new RoleNotFoundException("No role found for " +  role);

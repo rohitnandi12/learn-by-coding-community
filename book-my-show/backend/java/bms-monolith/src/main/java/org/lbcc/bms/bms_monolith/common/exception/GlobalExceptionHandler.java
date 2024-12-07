@@ -29,8 +29,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(status).body(errorResponse);
     }
 
-
-
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ApiErrorResponse> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException exception) {
 

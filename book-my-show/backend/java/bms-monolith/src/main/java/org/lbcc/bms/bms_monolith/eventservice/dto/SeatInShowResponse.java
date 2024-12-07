@@ -8,12 +8,12 @@ import java.util.UUID;
 @Getter
 public class SeatInShowResponse {
 
-    private UUID seatTypeInShowId;
+    private String seatTypeInShowId;
     private String bookingStatus;
 
     // Constructors, Getters, and Setters
 
-    public SeatInShowResponse(UUID seatTypeInShowId, String bookingStatus) {
+    public SeatInShowResponse(String seatTypeInShowId, String bookingStatus) {
         this.seatTypeInShowId = seatTypeInShowId;
         this.bookingStatus = bookingStatus;
     }

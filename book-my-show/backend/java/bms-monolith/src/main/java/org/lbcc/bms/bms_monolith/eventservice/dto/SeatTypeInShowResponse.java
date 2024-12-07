@@ -9,11 +9,11 @@ import java.util.UUID;
 @Getter
 public class SeatTypeInShowResponse {
 
-    private UUID seatTypeId;
+    private String seatTypeId;
     private String seatTypeName;
     private BigDecimal price;
 
-    public SeatTypeInShowResponse(UUID seatTypeId, String seatTypeName, BigDecimal price) {
+    public SeatTypeInShowResponse(String seatTypeId, String seatTypeName, BigDecimal price) {
         this.seatTypeId = seatTypeId;
         this.seatTypeName = seatTypeName;
         this.price = price;

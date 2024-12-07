@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Data
 public class UserDetailsImpl implements UserDetails {
   @Serial private static final long serialVersionUID = 1L;
-  private Long id;
+  private String id;
   private String username;
   private String email;
   @JsonIgnore private String password;
@@ -29,7 +29,7 @@ public class UserDetailsImpl implements UserDetails {
   public static UserDetailsImpl build(User user) {
     List<GrantedAuthority> authorities =
         user.getRoles().stream()
-            .map(role -> new SimpleGrantedAuthority(role.getName().name()))
+            .map(role -> new SimpleGrantedAuthority(role.getLabel().name()))
             .collect(Collectors.toList());
 
     return new UserDetailsImpl(
@@ -38,7 +38,7 @@ public class UserDetailsImpl implements UserDetails {
         user.getEmail(),
         user.getPassword(),
         authorities,
-        user.isEnabled());
+        user.getIsActive());
   }
 
   @Override

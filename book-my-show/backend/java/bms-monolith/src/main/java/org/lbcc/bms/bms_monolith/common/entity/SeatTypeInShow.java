@@ -5,7 +5,9 @@ import jakarta.persistence.Table;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -14,6 +16,8 @@ import java.math.BigDecimal;
 @Table(name = "seat_type_in_shows")
 @Getter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SeatTypeInShow extends BaseAuditingEntity {
 
     @ManyToOne

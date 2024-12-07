@@ -1,4 +1,3 @@
-
 package org.lbcc.bms.bms_monolith.userservice.common;
 
 import io.jsonwebtoken.*;
@@ -18,10 +17,10 @@ import java.util.Date;
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-  @Value("${app.jwtSecret}")
+  @Value("${app.auth:jwt-secret}")
   private String jwtSecret;
 
-  @Value("${app.jwtExpirationMs}")
+  @Value("${app.auth.jwt-expiration-ms}")
   private int jwtExpirationMs;
 
   public String generateJwtToken(Authentication authentication) {

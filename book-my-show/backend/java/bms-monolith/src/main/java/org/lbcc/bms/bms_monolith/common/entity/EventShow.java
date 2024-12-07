@@ -14,7 +14,9 @@ import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
 import jakarta.validation.constraints.NotNull;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.lbcc.bms.bms_monolith.common.enums.Genre;
 
@@ -25,6 +27,8 @@ import java.util.List;
 @Table(name = "event_shows")
 @Getter
 @SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public class EventShow extends BaseAuditingEntity {
 
     @ElementCollection(targetClass = Genre.class)
