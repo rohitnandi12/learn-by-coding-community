@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <!-- Event Table -->
+    <changeSet id="1-create-event" author="damini">
+        <createTable tableName="events">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="title" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)" />
+            <column name="vendor_id" type="CHAR(36)" />
+            <column name="venue_id" type="CHAR(36)" />
+            <column name="event_type_id" type="CHAR(36)" />
+            <column name="start_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="thumbnail_url" type="VARCHAR(255)" />
+        </createTable>
+    </changeSet>
+
+    <!-- Vendor Table -->
+    <changeSet id="2-create-vendor" author="damini">
+        <createTable tableName="vendors">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="name" type="VARCHAR(20)" />
+            <column name="contact_number" type="VARCHAR(20)" />
+            <column name="email" type="VARCHAR(100)">
+                <constraints checkConstraint="email LIKE '%@%.%'"/>
+            </column>
+            <column name="address" type="VARCHAR(255)">
+                <constraints checkConstraint="LENGTH(address) > 0"/>
+            </column>
+            <column name="website" type="VARCHAR(100)">
+                <constraints checkConstraint="website LIKE 'http%'"/>
+            </column>
+            <column name="status" type="VARCHAR(20)">
+                <constraints checkConstraint="status IN ('ACTIVE', 'INACTIVE', 'SUSPENDED')"/>
+            </column>
+            <column name="registration_date" type="TIMESTAMP" />
+            <column name="logo_url" type="VARCHAR(255)" />
+        </createTable>
+    </changeSet>
+
+    <!-- Venue Table -->
+    <changeSet id="3-create-venue" author="damini">
+        <createTable tableName="venues">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="name" type="VARCHAR(255)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="address" type="VARCHAR(255)" />
+            <column name="latitude" type="DECIMAL(10, 6)" />
+            <column name="longitude" type="DECIMAL(10, 6)" />
+            <column name="total_seating_capacity" type="INTEGER" />
+            <column name="venue_type" type="VARCHAR(20)" />
+            <column name="operational_status" type="VARCHAR(20)">
+                <constraints checkConstraint="operational_status IN ('OPERATIONAL', 'NON_OPERATIONAL')"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- EventShow Table -->
+    <changeSet id="4-create-event-show" author="damini">
+        <createTable tableName="event_shows">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="start_date" type="TIMESTAMP" />
+            <column name="end_date" type="TIMESTAMP" />
+            <column name="event_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <!-- EventType Table -->
+    <changeSet id="5-create-event-type" author="damini">
+        <createTable tableName="event_types">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="label" type="VARCHAR(15)" />
+        </createTable>
+    </changeSet>
+
+    <!-- Seat Table -->
+    <changeSet id="6-create-seat" author="damini">
+        <createTable tableName="seats">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="seat_type_id" type="CHAR(36)" >
+                <constraints nullable="false"/>
+            </column>
+            <column name="venue_id" type="CHAR(36)" />
+            <column name="operational_status" type="VARCHAR(20)">
+                <constraints checkConstraint="operational_status IN ('OPERATIONAL', 'NON_OPERATIONAL')"/>
+            </column>
+            <column name="label" type="VARCHAR(5)" />
+        </createTable>
+    </changeSet>
+
+    <!-- SeatType Table -->
+    <changeSet id="7-create-seat-type" author="damini">
+        <createTable tableName="seat_types">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="label" type="VARCHAR(15)" />
+            <column name="price" type="DECIMAL(10, 2)" />
+        </createTable>
+    </changeSet>
+
+    <!-- SeatInShow Table -->
+    <changeSet id="8-create-seat-in-show" author="damini">
+        <createTable tableName="seat_in_show">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="seat_type_in_show_id" type="CHAR(36)" />
+            <column name="show_id" type="CHAR(36)" />
+            <column name="booking_status" type="VARCHAR(20)" />
+        </createTable>
+    </changeSet>
+
+    <!-- SeatTypeInShow Table -->
+    <changeSet id="9-create-seat-type-in-show" author="damini">
+        <createTable tableName="seat_type_in_shows">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+            <column name="seat_type_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="show_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="price" type="DECIMAL(10, 2)" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="10-create-show-genre" author="damini">
+        <createTable tableName="show_genres">
+            <column name="show_id" type="CHAR(36)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="label" type="VARCHAR(15)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
