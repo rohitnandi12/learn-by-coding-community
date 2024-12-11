@@ -7,4 +7,5 @@
 
     <include file="db/changelog/v1.0/create-tables.xml" />
     <include file="db/changelog/v1.0/add-constraints.xml" />
+    <include file="db/changelog/v1.0/add-auth-tables.xml" />
 </databaseChangeLog>

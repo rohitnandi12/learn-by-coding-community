@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="IS9-add-roles" author="Rohit.N">
+        <createTable tableName="roles">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+
+            <column name="label" type="VARCHAR(10)">
+                <constraints checkConstraint="label IN ('ADMIN', 'GUEST', 'VENDOR')"/>
+            </column>
+            <column name="description" type="VARCHAR(50)" />
+        </createTable>
+
+        <createTable tableName="registered_users">
+            <column name="id" type="CHAR(36)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="created_date" type="TIMESTAMP" />
+            <column name="last_modified_date" type="TIMESTAMP" />
+            <column name="created_by" type="VARCHAR(10)" />
+            <column name="last_modified_by" type="VARCHAR(10)" />
+
+            <column name="username" type="VARCHAR(15)" />
+            <column name="email" type="VARCHAR(100)">
+                <constraints checkConstraint="email LIKE '%@%.%'"/>
+            </column>
+
+            <column name="country_code" type="VARCHAR(4)" />
+            <column name="phone" type="CHAR(10)" />
+            <column name="password" type="VARCHAR(255)" />
+            <column name="is_active" type="BOOLEAN" defaultValueBoolean="true"/>
+        </createTable>
+
+        <createTable tableName="user_roles">
+            <column name="user_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_user_roles_user" references="registered_users(id)" />
+            </column>
+            <column name="role_id" type="UUID">
+                <constraints nullable="false" foreignKeyName="fk_user_roles_role" references="roles(id)" />
+            </column>
+        </createTable>
+        <addPrimaryKey tableName="user_roles" columnNames="user_id, role_id" constraintName="pk_user_roles" />
+
+    </changeSet>
+
+</databaseChangeLog>

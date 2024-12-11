@@ -1,4 +1,4 @@
-Spring:
+spring:
   application:
     name: BMS Monolith
   datasource:
@@ -9,7 +9,7 @@ Spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQLDialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: validate
     show-sql: true
@@ -19,3 +19,8 @@ Spring:
 server:
   servlet:
     context-path: /api/v1
+app:
+  auth:
+    jwt:
+      secret-key: ${JWT_SECRET_KEY:ZmxhbWVyb2xsc3RvcHBlZGNyZWFtY29sbGVjdGZhbGxzb2xkaWVydG9uZWdpdmVua24=}
+      expiration-in-ms: ${JWT_EXPIRATION_IN_MS:50000}
