@@ -1,10 +1,16 @@
 package org.lbcc.bms.bms_monolith.eventservice.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import org.lbcc.bms.bms_monolith.common.entity.EventShow;
+import org.lbcc.bms.bms_monolith.eventservice.dto.seat.SeatInShowResponse;
+import org.lbcc.bms.bms_monolith.eventservice.dto.seat.SeatTypeInShowResponse;
 
 import java.util.List;
 
+@Data
+@AllArgsConstructor
 @Getter
 public class EventShowResponse {
 
@@ -14,16 +20,6 @@ public class EventShowResponse {
     private List<SeatInShowResponse> seatInShows;
     private List<SeatTypeInShowResponse> seatTypeInShows;
 
-    // Constructors, Getters, and Setters
-
-    public EventShowResponse(List<String> genres, String startDate, String endDate,
-                             List<SeatInShowResponse> seatInShows, List<SeatTypeInShowResponse> seatTypeInShows) {
-        this.genres = genres;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.seatInShows = seatInShows;
-        this.seatTypeInShows = seatTypeInShows;
-    }
 
     // Static factory method for conversion from EventShow entity to EventShowResponse DTO
     public static EventShowResponse fromEntity(EventShow show) {

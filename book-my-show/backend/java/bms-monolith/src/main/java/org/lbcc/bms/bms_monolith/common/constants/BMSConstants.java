@@ -11,4 +11,7 @@ public final class BMSConstants {
     public static final String UNEXPECTED_ERROR_MESSAGE = "An unexpected error occurred";
     public static final String UNEXPECTED_ERROR_CODE = "UNEXPECTED_ERROR";
     public static final String EVENT_SERVICE_ERROR = "EVENT_SERVICE_ERROR";
+
+    public static final String VENDOR_NOT_FOUND = "VENDOR_NOT_FOUND";
+    public static final String INVALID_VENDOR_REQUEST = "INVALID_VENDOR_REQUEST";
 }

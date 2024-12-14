@@ -18,10 +18,10 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class SeatType extends BaseAuditingEntity {
 
-    @Column(length = 15)
+    @Column(length = 15, nullable = false)
     private String label;
 
-    @Column(precision = 10, scale = 2)
+    @Column(precision = 10, scale = 2, nullable = false)
     private BigDecimal price;
 
 }

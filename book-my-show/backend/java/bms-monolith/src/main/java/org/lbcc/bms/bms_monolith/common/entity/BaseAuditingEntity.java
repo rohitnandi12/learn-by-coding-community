@@ -31,7 +31,7 @@ public abstract class BaseAuditingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "CHAR(36)")
+    @Column(columnDefinition = "CHAR(36)", nullable = false, updatable = false)
     private UUID id;
 
     @CreatedDate

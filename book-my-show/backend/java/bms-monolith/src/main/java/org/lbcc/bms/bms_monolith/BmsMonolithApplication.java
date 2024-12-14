@@ -9,5 +9,4 @@ public class BmsMonolithApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BmsMonolithApplication.class, args);
 	}
-
 }

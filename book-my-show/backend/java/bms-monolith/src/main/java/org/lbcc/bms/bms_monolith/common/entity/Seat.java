@@ -11,6 +11,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+
 import org.lbcc.bms.bms_monolith.common.enums.OperationalStatus;
 
 @Entity
@@ -19,6 +21,7 @@ import org.lbcc.bms.bms_monolith.common.enums.OperationalStatus;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 public class Seat extends BaseAuditingEntity {
 
     @ManyToOne

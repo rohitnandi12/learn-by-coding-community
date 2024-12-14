@@ -12,9 +12,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.FetchType;
-import jakarta.validation.constraints.NotNull;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.lbcc.bms.bms_monolith.common.enums.Genre;
 
@@ -24,7 +25,9 @@ import java.util.List;
 @Entity
 @Table(name = "event_shows")
 @Getter
+@Setter
 @SuperBuilder
+@NoArgsConstructor
 public class EventShow extends BaseAuditingEntity {
 
     @ElementCollection(targetClass = Genre.class)
@@ -33,10 +36,10 @@ public class EventShow extends BaseAuditingEntity {
     @Enumerated(EnumType.STRING)
     private List<Genre> genres;
 
-    @NotNull
+    @Column(nullable = false)
     private Instant startDate;
 
-    @NotNull
+    @Column(nullable = false)
     private Instant endDate;
 
     @ManyToOne
